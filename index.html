@@ -6,10 +6,12 @@
     <title>WebSockets</title>
 </head>
 <body>
-    <input type="text" placeholder="Envie sua mensagem" id="text">
-    <button>Send</button>
-
     <div id="log"></div>
+
+    <div id="sendControls">
+        <input type="text" placeholder="Envie sua mensagem" id="text">
+        <button>Send</button>
+    </div>
 
     <script>
         let sock = new WebSocket('ws://localhost:5001')
@@ -24,8 +26,19 @@
         document.querySelector('button').onclick = () => {
             let text = document.getElementById('text').value;
             sock.send(text);
+            log.innerHTML += "You: "+ text + "<br/>";
         };
 
     </script>
+
+    <style>
+        #log {
+            width: 500px;
+            height: 500px;
+            border: 2px solid darkgray;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+    </style>
 </body>
 </html>

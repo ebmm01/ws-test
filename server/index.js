@@ -5,11 +5,16 @@ s.on('connection', function(ws) {
     ws.on('message', message => {
         console.log('Received:' + message);
         
-        if (message == 'hello') {
-            ws.send('Hello from the server :D');
-        }
-        else {
-            ws.send(message + ' - Returned from the server')
-        }
+        s.clients.forEach(function e(client){
+            if(client != ws) 
+                client.send(message);
+        })
+        
+        //ws.send("From server:" + message)
     })
+
+    ws.on('close', function() {
+        console.log('Client lost');
+    })
+    console.log('one more client connected');
 })
